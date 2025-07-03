@@ -1,0 +1,38 @@
+Profit YoY% Dynamic = 
+VAR _LatestVisiblePeriod =
+    MAX ( Sales[OrderDate] )
+
+VAR _CurrentMonthStart =
+    DATE ( YEAR ( _LatestVisiblePeriod ), MONTH ( _LatestVisiblePeriod ), 1 )
+
+VAR _Previous12MonthProfit =
+    CALCULATE (
+        SUM ( Sales[Profit] ),
+        REMOVEFILTERS ( Sales ),
+        DATESBETWEEN (
+            Sales[OrderDate],
+            EOMONTH ( _CurrentMonthStart, -24 ) + 1,
+            EOMONTH ( _CurrentMonthStart, -12 )
+        )
+    )
+
+VAR _Current12MonthProfit =
+    CALCULATE (
+        SUM ( Sales[Profit] ),
+        REMOVEFILTERS ( Sales ),
+        DATESBETWEEN (
+            Sales[OrderDate],
+            EOMONTH ( _CurrentMonthStart, -12 ) + 1,
+            EOMONTH ( _CurrentMonthStart, 0 )
+        )
+    )
+
+VAR _Result =
+    IF (
+        _Previous12MonthProfit > 0,
+        (_Current12MonthProfit - _Previous12MonthProfit) / _Previous12MonthProfit,
+        BLANK ()
+    )
+
+RETURN
+    _Result

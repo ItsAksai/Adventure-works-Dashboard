@@ -1,0 +1,12 @@
+Top 2 Product Sales = 
+CALCULATE (
+    SUM ( Sales[Sales] ),
+    KEEPFILTERS (
+        TOPN (
+            2,
+            ALL ( 'Product'[Product] ),
+            CALCULATE ( SUM ( Sales[Sales] ) ),
+            DESC
+        )
+    )
+)

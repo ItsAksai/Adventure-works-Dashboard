@@ -1,0 +1,2 @@
+Region[Group] = LOOKUPVALUE(Security1[Group], Security1[Email],
+USERPRINCIPALNAME(),Security1[Group],Region[Group])

@@ -1,0 +1,12 @@
+Profit YoY% Dynamic Text = 
+
+VAR _MoM = [Profit YoY% Dynamic]
+
+VAR _Result = 
+SWITCH(TRUE(),
+    _MoM = BLANK(),"",
+    _MoM < 0,"▼ "&FORMAT( _MoM,"0.0"&"%" ),
+    _MoM >= 0,"▲ "&FORMAT( _MoM,"0.0"&"%" )
+)
+
+RETURN _Result
